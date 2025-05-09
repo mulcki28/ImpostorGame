@@ -667,16 +667,17 @@
                 const isImpostor = impostors.includes(player);
                 
                 if (isImpostor) {
-                    roleInfoElement.textContent = "Du bist der IMPOSTOR!";
-                    roleInfoElement.className = "game-text impostor-role";
-                    wordInfoElement.textContent = "Du kennst das Wort nicht! Versuche zu erraten, was es sein könnte.";
-                    playerWordElement.style.display = "none";
+                roleInfoElement.textContent = "Du bist der IMPOSTOR!";
+                roleInfoElement.className = "game-text impostor-role";
+                playerWordElement.textContent = "???";
+                playerWordElement.style.display = "inline";
                 } else {
-                    roleInfoElement.textContent = "Du bist ein normaler Spieler";
-                    roleInfoElement.className = "game-text normal-role";
-                    playerWordElement.textContent = normalWord;
-                    playerWordElement.style.display = "inline";
+                roleInfoElement.textContent = "Du bist ein normaler Spieler";
+                roleInfoElement.className = "game-text normal-role";
+                playerWordElement.textContent = normalWord;
+                playerWordElement.style.display = "inline";
                 }
+
                 
                 // Zeige den Weiter-Button
                 document.getElementById("nextCardBtn").textContent = "Nächste Karte";
