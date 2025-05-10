@@ -382,11 +382,11 @@
             <div class="form-group" id="themeDiv">
                 <label for="theme">Thema:</label>
                 <select id="theme">
-                    <option value="lehrer">Lehrer</option>
-                    <option value="schueler">Schüler</option>
-                    <option value="brainrot">Brainrot</option>
-                    <option value="nettefeger">Nette Feger</option>
                     <option value="allgemein">Allgemein</option>
+                    <option value="bekanntheiten">Bekanntheiten</option>
+                    <option value="memes">Memes</option>
+                    <option value="geographie">Geographie</option>
+                    <option value="deutschland">Deutschland</option>
                 </select>
             </div>
             
@@ -434,12 +434,94 @@
         
         // Vordefinierte Wörter nach Themen
         const themeWords = {
-            lehrer: ["Herr Schildt", "Frau Narjes", "Frau Lins", "Herr Rademaker", "Frau Langlet", "Herr Hoekstra", "Frau Baldehaar", "Herr Hensen", "Herr Herbers", "Herr Henschke", "Herr Pfeifer", "Frau Wiarda", "Herr Schrovenwever", "Herr Kremer"],
-            schueler: ["Jayden", "Nick", "Robin", "Daniel", "Mika", "Hanjo", "Marc", "Marek", "Lucas Br.", "Lukas Ba.", "Massih", "Gero", "Justin", "Maarten", "Luis"],
-            brainrot: ["John Pork", "Tim Cheese", "EmirMono", "Tasse Kaffee", "Is ts tuff?", "Phonk", "veiny ahh dih", "italian brainrot", "hirnschimmel"],
-            nettefeger: ["renault clio", "Minions Film", "Minecraft Film", "Gartic Phone", "Fahrrad Unfall Jayden", "Gero und Alice Zeichnung"],
-            allgemein: ["Basketball", "Wohnung", "Taschenrechner", "Deutschland", "Bier", "Buch", "Ozean", "Insel", "Kirche", "Apfel", "PC", "Laptop", "Fensterbank", "Bank", "Kabel", "Musiker", "Virus", "Schule",
-            "Maus", "Löffel", "Birkenbaum"]
+            allgemein: ["Abfluss", "Abstellraum", "Akku", "Akzent", "Alarmanlage", "Ampel", "Angel", "Aquarium", "Architekt", "Ausweis",
+            "Backpapier", "Bagger", "Balkon", "Bankkarte", "Bauklötze", "Baumarkt", "Baustelle", "Behälter", "Beipackzettel", "Beistelltisch",
+            "Beleg", "Bettdecke", "Bettwäsche", "Bildschirm", "Blitz", "Blume", "Bohrmaschine", "Briefkasten", "Brotdose", "Büroklammer",
+            "Chips", "Comic", "Currywurst", "Dachboden", "Dampfbad", "Dartscheibe", "Deckel", "Diät", "Drehstuhl", "Drucker",
+            "Eierschneider", "Einkaufsliste", "Einrad", "Einwegrasierer", "Eiswürfel", "Ellenbogen", "Erste-Hilfe-Kasten", "Fahrradkette", "Fahrstuhl", "Fensterbank",
+            "Fernbedienung", "Feuerzeug", "Filmset", "Filterkaffee", "Fingernagel", "Flaschenöffner", "Fleischwolf", "Flugzeug", "Flur", "Föhn",
+            "Fotoalbum", "Fotopapier", "Fragebogen", "Frisbee", "Frittieröl", "Frühstücksei", "Fußmatte", "Garderobe", "Gartenschlauch", "Gaskocher",
+            "Geburtstagskarte", "Gebrauchsanweisung", "Geldschein", "Gemüseschneider", "Geschirrspüler", "Geschenkpapier", "Gewürzregal", "Gießkanne", "Gipfel", "Gitarre",
+            "Glasreiniger", "Gleitmittel", "Glocke", "Gratwanderung", "Grillzange", "Gürtel", "Gutschein", "Haarbürste", "Haargummi", "Halskette",
+            "Handcreme", "Handschuh", "Handtuchhalter", "Hausnummer", "Heizkörper", "Helm", "Hering", "Hinterhof", "Hocker", "Holzboden",
+            "Hörgerät", "Hubschrauber", "Hundeleine", "Hüpfburg", "Imbissbude", "Inbusschlüssel", "Insel", "Isomatte", "Jackentasche", "Jalousie",
+            "Joystick", "Jugendherberge", "Kabeltrommel", "Kaktus", "Kalender", "Kameraobjektiv", "Kanister", "Karaffe", "Kartenspiel", "Kassenzettel",
+            "Katze", "Kaugummiautomat", "Keksdose", "Kerze", "Kette", "Kicker", "Kinderwagen", "Kiste", "Klammeraffe", "Klebeband",
+            "Kleidungsstück", "Klingel", "Klopapier", "Knetmasse", "Knopf", "Kochfeld", "Kochlöffel", "Kopfhörer", "Korkenzieher", "Kosmetikspiegel",
+            "Kräutermischung", "Kreditkarte", "Kugelschreiber", "Kühltasche", "Kühlschrank", "Kunststoff", "Ladekabel", "Lagerfeuer", "Lampe", "Laterne",
+            "Latzhose", "Lautsprecher", "Lebensmittel", "Leiter", "Lichterkette", "Lineal", "Lippenstift", "Locher", "Luftballon", "Luftmatratze",
+            "Luftreiniger", "Lüftung", "Magnet", "Mahlzeit", "Malbuch", "Malpinsel", "Markise", "Matratze", "Mausefalle", "Medikament",
+            "Messerblock", "Metzgerei", "Mikroskop", "Milchkanne", "Milchzahndose", "Mindesthaltbarkeitsdatum", "Mixer", "Möbelstück", "Müllbeutel", "Mülltonne",
+            "Münzautomat", "Mütze", "Nagellack", "Nähmaschine", "Nasenspray", "Notizbuch", "Nudelholz", "Ohrhörer", "Ofenhandschuh", "Ordnerrücken",
+            "Packpapier", "Paket", "Papierflieger", "Papierkorb", "Parfümflasche", "Passwort", "Pausenbrot", "Pendel", "Pflaster", "Pflaume",
+            "Pinsel", "Plastiktüte", "Poster", "Pudding", "Putzmittel", "Puzzleteil", "Quittung", "Rasierapparat", "Rasierschaum", "Rathaus",
+            "Rechnung", "Regenjacke", "Reisepass", "Reißverschluss", "Riegel", "Rutschbahn", "Sattel", "Scanner", "Schaufel", "Scheibe",
+            "Schere", "Schlafsack", "Schlüsselanhänger", "Schmuckkästchen", "Schneebesen", "Schokoladenstück", "Schraubenzieher", "Schreibtischlampe", "Schuhlöffel", "Schultasche",
+            "Seifenspender", "Seitenstreifen", "Selbstbedienung", "Serviette", "Shampooflasche", "Sicherheitsnadel", "Sieb", "Sofa", "Sonnenbrille", "Spardose",
+            "Spiegelbild", "Spielkarte", "Spielkonsole", "Spitzname", "Spraydose", "Sprungbrett", "Stabmixer", "Stadtplan", "Staubsauger", "Steckdose",
+            "Stehlampe", "Sternschnuppe", "Stichwort", "Stofftier", "Stoppschild", "Strohhalm", "Strumpfhose", "Suppenkelle", "Tablet", "Taschenlampe",
+            "Tastatur", "Teebeutel", "Teelicht", "Telefonbuch", "Thermometer", "Toaster", "Tontopf", "Trampolin", "Treppe", "Trittleiter",
+            "Trompete", "Tropfen", "Tupperdose", "Türrahmen", "Umschlag", "Unterschrift", "Verlängerungskabel", "Videospiel", "Wackelzahn", "Wandtattoo",
+            "Wasserfilter", "Wasserkocher", "Wasserpistole", "Wäscheklammer", "Wattestäbchen", "Wegbeschreibung", "Weinglas", "Werkzeugkasten", "Windmühle", "Winkelmesser",
+            "Wohnmobil", "Würfel", "Zahnbürstenhalter", "Zahnarztstuhl", "Zahnspange", "Zange", "Zeitung", "Zelt", "Zimmerpflanze", "Zuckerdose"],
+            bekanntheiten: ["Michael Jackson (Sänger)", "Eminem (Rapper)", "The Rock (Schauspieler)", "Beyoncé (Sängerin)",
+            "Rihanna (Sängerin)", "Taylor Swift (Sängerin)", "Ed Sheeran (Sänger)", "Ariana Grande (Sängerin)",
+            "Lady Gaga (Sängerin)", "Justin Bieber (Sänger)", "Snoop Dogg (Rapper)", "Drake (Rapper)",
+            "Shakira (Sängerin)", "Billie Eilish (Sängerin)", "Elvis Presley (Sänger)", "Madonna (Sängerin)",
+            "Freddie Mercury (Queen)", "Katy Perry (Sängerin)", "Bruno Mars (Sänger)", "Post Malone (Rapper)",
+
+            "Johnny Depp (Schauspieler)", "Leonardo DiCaprio (Schauspieler)", "Will Smith (Schauspieler)", "Angelina Jolie (Schauspielerin)",
+            "Brad Pitt (Schauspieler)", "Tom Cruise (Schauspieler)", "Keanu Reeves (Schauspieler)", "Morgan Freeman (Schauspieler)",
+            "Robert Downey Jr. (Schauspieler)", "Chris Hemsworth (Schauspieler)", "Scarlett Johansson (Schauspielerin)",
+            "Jack Black (Schauspieler)", "Jim Carrey (Schauspieler)", "Emma Watson (Schauspielerin)", "Daniel Radcliffe (Schauspieler)",
+
+            "Harry Potter (Harry Potter)", "Hermine (Harry Potter)", "Ron (Harry Potter)", "Dumbledore (Harry Potter)",
+            "Voldemort (Harry Potter)", "Hogwarts (Harry Potter)",
+
+            "Spider-Man (Marvel)", "Iron Man (Marvel)", "Hulk (Marvel)", "Captain America (Marvel)", "Black Panther (Marvel)",
+            "Thor (Marvel)", "Loki (Marvel)", "Deadpool (Marvel)", "Wolverine (Marvel)", "Avengers (Marvel)",
+
+            "Batman (DC)", "Superman (DC)", "Joker (DC)", "Wonder Woman (DC)",
+
+            "Darth Vader (Star Wars)", "Yoda (Star Wars)", "Luke Skywalker (Star Wars)", "Leia (Star Wars)",
+            "Stormtrooper (Star Wars)", "R2-D2 (Star Wars)", "C-3PO (Star Wars)", "Obi-Wan Kenobi (Star Wars)",
+
+            "Minions (Ich – Einfach unverbesserlich)", "Gru (Ich – Einfach unverbesserlich)",
+            "Olaf (Frozen)", "Elsa (Frozen)", "Anna (Frozen)", "Shrek (Shrek)", "Donkey (Shrek)",
+            "Simba (König der Löwen)", "Mufasa (König der Löwen)", "Scar (König der Löwen)",
+
+            "SpongeBob (SpongeBob Schwammkopf)", "Patrick (SpongeBob Schwammkopf)",
+            "Mario (Super Mario)", "Luigi (Super Mario)", "Bowser (Super Mario)",
+            "Pikachu (Pokémon)", "Charizard (Pokémon)",
+
+            "Buzz Lightyear (Toy Story)", "Woody (Toy Story)",
+            "Lightning McQueen (Cars)", "Mater (Cars)",
+            "Nemo (Findet Nemo)", "Dory (Findet Nemo)",
+            "Po (Kung Fu Panda)", "Kung Fu Panda (Kung Fu Panda)",
+            "Alex (Madagascar)", "King Julien (Madagascar)",
+
+            "Mickey Mouse (Disney)", "Donald Duck (Disney)", "Goofy (Disney)",
+            "Barbie (Barbie)", "Tinkerbell (Peter Pan)", "Peter Pan (Peter Pan)",
+
+            "WALL-E (WALL-E)", "Baymax (Baymax)",
+            "Mr. Incredible (Die Unglaublichen)", "Elastigirl (Die Unglaublichen)",
+            "Jack-Jack (Die Unglaublichen)", "Frozone (Die Unglaublichen)",],
+            memes: ["John Pork", "Tim Cheese", "EmirMono", "Tasse Kaffee", "Is ts tuff?", "Phonk", "veiny ahh dih", "italian brainrot", "hirnschimmel"],
+            geographie: ["Deutschland", "Frankreich", "Italien", "Spanien", "England", "USA", "Kanada", "China", "Russland", "Australien",
+            "Brasilien", "Indien", "Türkei", "Japan", "Afrika", "Europa", "Asien", "New York", "Berlin", "Paris",
+            "Rom", "London", "Madrid", "München", "Hamburg", "Köln", "Frankfurt", "Los Angeles", "Hollywood", "Tokio",
+            "Sydney", "Istanbul", "Ägypten", "Kairo", "Mexiko", "Dubai", "Las Vegas", "Barcelona", "Wien", "Amsterdam",
+            "Europa-Park", "Alpen", "Meer", "Wald", "Berg", "Fluss", "See", "Insel", "Strand", "Sahara",
+            "Nordpol", "Südpol", "Erde", "Welt", "Planet", "Stadt", "Dorf", "Land", "Gebirge", "Tal",
+            "Rhein", "Donau", "Elbe", "Zugspitze", "Mount Everest", "Eiffelturm", "Big Ben", "Brandenburger Tor", "Freiheitsstatue", "Pyramide",
+            "Europa", "Nordamerika", "Südamerika", "Afrika", "Asien", "Australien", "Antarktis", "Wolkenkratzer", "Hügel", "Schloss"],
+            deutschland: ["Bier", "Brezel", "Wurst", "Schnitzel", "Döner", "Käsekuchen", "Apfelstrudel", "Brötchen", "Schule", "Abitur",
+            "Polizei", "Feuerwehr", "Hilf mir! - TV Sendung", "Tagesschau", "Aldi", "Lidl", "Rewe", "Edeka", "MediaMarkt", "Bahn",
+            "Autobahn", "Zug", "ICE", "Fußball", "Tor", "Stadion", "WM", "Oktoberfest", "Dirndl", "Lederhose",
+            "Berlin", "München", "Hamburg", "Köln", "Frankfurt", "Brandenburger Tor", "Zugspitze", "Schloss Neuschwanstein", "Bayern", "Nordsee",
+            "Ostsee", "Alpen", "Adidas", "Puma", "BMW", "Mercedes", "Audi", "Volkswagen", "Currywurst", "Haribo",
+            "Nivea", "Nutella", "Ritter Sport", "Playmobil", "Lego", "Kinder Schokolade", "Sparkasse", "Volksbank", "FC Bayern", "BVB",
+            "Thomas Müller", "Neuer", "Helene Fischer", "Rammstein", "Mark Forster", "Talahohns", "AfD", "CDU-CSU", "SPD", "FDP", "Die Grünen", "Die LINKE", "Bundestag", "Olaf Abi", "Döner"]
         };
         
         // DOM-Elemente
