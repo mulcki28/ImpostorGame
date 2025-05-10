@@ -321,6 +321,83 @@
             text-align: center;
             margin-bottom: 2rem;
         }
+        .theme-lock {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            margin-left: 10px;
+            cursor: pointer;
+            background-color: var(--card-background);
+            border-radius: 50%;
+            width: 24px;
+            height: 24px;
+            transition: all 0.2s ease;
+        }
+
+        .theme-lock:hover {
+            background-color: var(--primary-dark);
+        }
+
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: rgba(0, 0, 0, 0.6);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .modal-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .modal {
+            background-color: var(--card-background);
+            padding: 2rem;
+            border-radius: 12px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+            max-width: 400px;
+            width: 100%;
+            position: relative;
+            transform: translateY(-20px);
+            transition: all 0.3s ease;
+        }
+
+        .modal-overlay.active .modal {
+            transform: translateY(0);
+        }
+
+        .modal-close {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            color: var(--text-secondary);
+            cursor: pointer;
+            padding: 0;
+            margin: 0;
+            width: 30px;
+            height: 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+        }
+
+        .modal-close:hover {
+            background-color: rgba(255, 255, 255, 0.1);
+            color: var(--text-color);
+        }
         
         @media (max-width: 600px) {
             .container {
@@ -388,6 +465,7 @@
                     <option value="geographie">Geographie</option>
                     <option value="deutschland">Deutschland</option>
                 </select>
+                <div class="theme-lock" id="themeLock">🔒</div>
             </div>
             
             <div class="form-group" id="wordSetupDiv" style="display: none;">
@@ -431,6 +509,8 @@
         let impostors = [];
         let normalWord = "";
         let currentPlayerIndex = 0;
+        const UNLOCK_CODE = "NetteFeger.unlock";
+        let unlockedThemes = [];
         
         // Vordefinierte Wörter nach Themen
         const themeWords = {
@@ -526,7 +606,12 @@
             "Berlin", "München", "Hamburg", "Köln", "Frankfurt", "Brandenburger Tor", "Zugspitze", "Schloss Neuschwanstein", "Bayern", "Nordsee",
             "Ostsee", "Alpen", "Adidas", "Puma", "BMW", "Mercedes", "Audi", "Volkswagen", "Currywurst", "Haribo",
             "Nivea", "Nutella", "Ritter Sport", "Playmobil", "Lego", "Kinder Schokolade", "Sparkasse", "Volksbank", "FC Bayern", "BVB",
-            "Thomas Müller", "Neuer", "Helene Fischer", "Rammstein", "Mark Forster", "Talahohns", "AfD", "CDU-CSU", "SPD", "FDP", "Die Grünen", "Die LINKE", "Bundestag", "Olaf Abi", "Döner"]
+            "Thomas Müller", "Neuer", "Helene Fischer", "Rammstein", "Mark Forster", "Talahohns", "AfD", "CDU-CSU", "SPD", "FDP", "Die Grünen", "Die LINKE", "Bundestag", "Olaf Abi", "Döner"],
+            netteFeger: ["Staubsauger", "Besen", "Kehrblech", "Wischmopp", "Staubwedel", 
+                        "Lappen", "Reinigungsmittel", "Luftreiniger", "Swiffer", "Fensterputzer", 
+                        "Mikrofasertuch", "Bodenreiniger", "Handkehrer", "Mülleimer", "Schmutzradierer",
+                        "Abzieher", "Wassereimer", "Putzplan", "Reinigungskraft", "Putzfrau",
+                        "Hausmeister", "Glasreiniger", "Scheuermilch", "Klobürste", "Haushaltshandschuhe"]
         };
         
         // DOM-Elemente
@@ -543,7 +628,51 @@
         const playerCounter = document.getElementById("playerCounter");
         const customWordsText = document.getElementById("customWordsText");
         const wordCountInfo = document.getElementById("wordCountInfo");
-        
+        // Funktion zum Öffnen des Freischalt-Modals
+        function openUnlockModal() {
+            document.getElementById("unlockModal").classList.add("active");
+            document.getElementById("unlockCode").value = "";
+            document.getElementById("unlockError").style.display = "none";
+        }
+
+        // Funktion zum Schließen des Freischalt-Modals
+        function closeUnlockModal() {
+            document.getElementById("unlockModal").classList.remove("active");
+        }
+
+        // Funktion zum Überprüfen des Freischaltcodes
+        function checkUnlockCode() {
+            const code = document.getElementById("unlockCode").value.trim();
+            const unlockError = document.getElementById("unlockError");
+            
+            // Code überprüfen
+            if (code === UNLOCK_CODE) {
+                // Thema freischalten
+                if (!unlockedThemes.includes("netteFeger")) {
+                    unlockedThemes.push("netteFeger");
+                    
+                    // Neues Thema zur Auswahl hinzufügen
+                    const themeSelect = document.getElementById("theme");
+                    const newOption = document.createElement("option");
+                    newOption.value = "netteFeger";
+                    newOption.textContent = "Nette Feger";
+                    themeSelect.appendChild(newOption);
+                    
+                    // Erfolgreiche Freischaltung anzeigen
+                    alert("Thema 'Nette Feger' erfolgreich freigeschaltet!");
+                    
+                    // Modal schließen
+                    closeUnlockModal();
+                } else {
+                    unlockError.textContent = "Dieses Thema wurde bereits freigeschaltet.";
+                    unlockError.style.display = "block";
+                }
+            } else {
+                // Fehlermeldung anzeigen
+                unlockError.textContent = "Dieser Code existiert nicht!";
+                unlockError.style.display = "block";
+            }
+        }
         // Event-Handler hinzufügen
         document.getElementById("addPlayerBtn").addEventListener("click", addPlayerField);
         document.getElementById("removePlayerBtn").addEventListener("click", removePlayerField);
@@ -554,7 +683,10 @@
         document.getElementById("nextCardBtn").addEventListener("click", showNextCard);
         document.getElementById("endGameBtn").addEventListener("click", endGame);
         document.getElementById("restartGameBtn").addEventListener("click", restartGame);
-        
+        document.getElementById("themeLock").addEventListener("click", openUnlockModal);
+        document.getElementById("closeModal").addEventListener("click", closeUnlockModal);
+        document.getElementById("submitUnlockBtn").addEventListener("click", checkUnlockCode);
+                
         // Initialisierung beim Laden
         window.addEventListener('DOMContentLoaded', function() {
             // Füge standardmäßig 3 Spielerfelder hinzu
@@ -816,5 +948,17 @@
             prepareGame();
         }
     </script>
+        <div class="modal-overlay" id="unlockModal">
+        <div class="modal">
+            <button class="modal-close" id="closeModal">✖</button>
+            <h3>Thema freischalten</h3>
+            <div class="form-group">
+                <label for="unlockCode">Gib den Freischaltcode ein:</label>
+                <input type="text" id="unlockCode" placeholder="Code eingeben...">
+                <div id="unlockError" class="error-message" style="display: none;">Dieser Code existiert nicht!</div>
+            </div>
+            <button type="button" id="submitUnlockBtn">Freischalten</button>
+        </div>
+    </div>
 </body>
 </html>
