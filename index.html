@@ -421,7 +421,7 @@
 </head>
 <body>
     <div class="app-header">
-        <h1>Mulcki Studios©</h1>
+        <h1>Mulcki Studios</h1>
         <h2 class="game-title">Imposter Wortspiel</h2>
     </div>
     
@@ -737,14 +737,24 @@
         // Funktion zum Öffnen des Freischalt-Modals
         function openUnlockModal() {
             document.getElementById("unlockModal").classList.add("active");
+
+            // Zurücksetzen:
             document.getElementById("unlockCode").value = "";
             document.getElementById("unlockError").style.display = "none";
+            document.getElementById("unlockSuccess").style.display = "none";
         }
+
 
         // Funktion zum Schließen des Freischalt-Modals
         function closeUnlockModal() {
             document.getElementById("unlockModal").classList.remove("active");
+
+            // Reset bei Schließen
+            document.getElementById("unlockCode").value = "";
+            document.getElementById("unlockError").style.display = "none";
+            document.getElementById("unlockSuccess").style.display = "none";
         }
+
 
        // Funktion zum Überprüfen des Freischaltcodes
         function checkUnlockCode() {
