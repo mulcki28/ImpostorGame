@@ -6,7 +6,7 @@
     <title>Mulcki Studios - Imposter Wortspiel</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Bangers&family=Poppins:wght@400;600;700&family=Comic+Neue:wght@400;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Bangers&family=Permanent+Marker&family=Poppins:wght@400;600;700&family=Comic+Neue:wght@400;700&display=swap" rel="stylesheet">
     <style>
         :root {
             --primary-color: #6366f1; /* Indigo */
@@ -51,7 +51,7 @@
         
         h1 {
             text-align: center;
-            font-family: 'Bangers', cursive;
+            font-family: 'Permanent Marker', cursive;
             font-size: 4rem;
             letter-spacing: 2px;
             margin-bottom: 0.5rem;
@@ -59,7 +59,6 @@
             -webkit-background-clip: text;
             background-clip: text;
             color: transparent;
-            text-shadow: 3px 3px 6px rgba(0, 0, 0, 0.3);
         }
         
         h2 {
@@ -71,7 +70,7 @@
         }
         
         .game-title {
-            font-family: 'Bangers', cursive;
+            font-family: 'Permanent Marker', cursive;
             letter-spacing: 1px;
         }
         
@@ -229,15 +228,6 @@
             margin-top: 2rem;
         }
         
-        .white-text-black-stroke {
-            color: white;
-            text-shadow: 
-                -1px -1px 0 #000,
-                1px -1px 0 #000,
-                -1px 1px 0 #000,
-                1px 1px 0 #000;
-        }
-        
         #playerNamesList {
             margin-top: 1rem;
             display: flex;
@@ -308,6 +298,11 @@
             padding: 3px 8px;
             border-radius: 4px;
             font-weight: 700;
+        }
+        
+        .btn-large {
+            padding: 14px 28px;
+            font-size: 1.1rem;
         }
         
         @media (max-width: 600px) {
@@ -390,7 +385,7 @@
     </div>
     
     <div class="container" id="cardScreen">
-        <h2 class="white-text-black-stroke game-title">Rollenkarten</h2>
+        <h2 class="game-title">Rollenkarten</h2>
         <div class="card" id="playerCard">
             <h3 id="playerName" class="game-text">Spielername</h3>
             <p class="game-text">Tippe auf die Karte, um deine Rolle zu sehen</p>
@@ -404,8 +399,8 @@
     </div>
     
     <div class="container" id="gameScreen">
-        <h2 class="white-text-black-stroke game-title">Spiel läuft</h2>
-        <p class="white-text-black-stroke game-text">Findet heraus, wer die IMPOSTER sind!</p>
+        <h2 class="game-title">Spiel läuft</h2>
+        <p class="game-text">Findet heraus, wer die IMPOSTER sind!</p>
         
         <div class="game-controls">
             <button type="button" id="endGameBtn">Spiel beenden</button>
@@ -588,19 +583,19 @@
             players = [];
             
             let emptyNameFound = false;
-            for (const input of playerInputs) {
-                if (input.value.trim() === "") {
-                    errorPlayerCount.textContent = "Bitte alle Spielernamen eingeben!";
-                    errorPlayerCount.style.display = "block";
-                    emptyNameFound = true;
-                    return;
+            for (let i = 0; i < playerInputs.length; i++) {
+                const input = playerInputs[i];
+                let playerName = input.value.trim();
+                
+                // Wenn Feld leer ist, nimm den Standardnamen des Feldes
+                if (playerName === "") {
+                    playerName = `Spieler ${i + 1}`;
                 }
-                players.push(input.value.trim());
+                
+                players.push(playerName);
             }
             
-            if (!emptyNameFound) {
-                errorPlayerCount.style.display = "none";
-            }
+            errorPlayerCount.style.display = "none";
             
             if (players.length < 3) {
                 errorPlayerCount.textContent = "Es müssen mindestens 3 Spieler sein!";
@@ -667,21 +662,29 @@
                 const isImpostor = impostors.includes(player);
                 
                 if (isImpostor) {
-                roleInfoElement.textContent = "Du bist der IMPOSTOR!";
-                roleInfoElement.className = "game-text impostor-role";
-                playerWordElement.textContent = "???";
-                playerWordElement.style.display = "inline";
+                    roleInfoElement.textContent = "Du bist der IMPOSTOR!";
+                    roleInfoElement.className = "game-text impostor-role";
+                    playerWordElement.textContent = "???";
+                    playerWordElement.style.display = "inline";
                 } else {
-                roleInfoElement.textContent = "Du bist ein normaler Spieler";
-                roleInfoElement.className = "game-text normal-role";
-                playerWordElement.textContent = normalWord;
-                playerWordElement.style.display = "inline";
+                    roleInfoElement.textContent = "Du bist ein normaler Spieler";
+                    roleInfoElement.className = "game-text normal-role";
+                    playerWordElement.textContent = normalWord;
+                    playerWordElement.style.display = "inline";
                 }
-
                 
-                // Zeige den Weiter-Button
-                document.getElementById("nextCardBtn").textContent = "Nächste Karte";
-                document.getElementById("nextCardBtn").style.display = "block";
+                // Prüfen ob es die letzte Karte ist und Button entsprechend anpassen
+                const nextCardBtn = document.getElementById("nextCardBtn");
+                
+                if (currentPlayerIndex === players.length - 1) {
+                    nextCardBtn.textContent = "Spiel starten";
+                    nextCardBtn.classList.add("btn-large");
+                } else {
+                    nextCardBtn.textContent = "Nächste Karte";
+                    nextCardBtn.classList.remove("btn-large");
+                }
+                
+                nextCardBtn.style.display = "block";
             } else {
                 // Alle Spieler haben ihre Karten gesehen, zum Spielbildschirm wechseln
                 cardScreen.style.display = "none";
