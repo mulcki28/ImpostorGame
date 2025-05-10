@@ -393,6 +393,17 @@
             justify-content: center;
             border-radius: 50%;
         }
+        .success-message {
+        color: var(--success-color);
+        font-weight: 600;
+        margin: 8px 0;
+        background-color: rgba(16, 185, 129, 0.1); /* Grün mit Transparenz */
+        padding: 10px;
+        border-radius: 6px;
+        border-left: 3px solid var(--success-color);
+        font-family: 'Poppins', sans-serif;
+        }
+
 
         .modal-close:hover {
             background-color: rgba(255, 255, 255, 0.1);
@@ -756,16 +767,19 @@
         }
 
 
-       // Funktion zum Überprüfen des Freischaltcodes
+            // Funktion zum Überprüfen des Freischaltcodes
         function checkUnlockCode() {
             const code = document.getElementById("unlockCode").value.trim();
             const unlockError = document.getElementById("unlockError");
-            
-            console.log("Überprüfe Code:", code); // Debug-Ausgabe
-            
+            const unlockSuccess = document.getElementById("unlockSuccess");
+
+            // Immer zuerst alles zurücksetzen
+            unlockError.style.display = "none";
+            unlockSuccess.style.display = "none";
+
             // Code überprüfen
             if (code === UNLOCK_CODE) {
-                    if (!unlockedThemes.includes("netteFeger")) {
+                if (!unlockedThemes.includes("netteFeger")) {
                     unlockedThemes.push("netteFeger");
 
                     const themeSelect = document.getElementById("theme");
@@ -774,24 +788,18 @@
                     newOption.textContent = "Nette Feger";
                     themeSelect.appendChild(newOption);
 
-                    // Erfolgreiche Freischaltung anzeigen
-                    unlockError.style.display = "none";
-                    document.getElementById("unlockSuccess").style.display = "block";
-
-                    // Modal NICHT automatisch schließen
-                    // closeUnlockModal(); // ggf. entfernen
+                    // Erfolg anzeigen
+                    unlockSuccess.style.display = "block";
                 } else {
                     unlockError.textContent = "Dieses Thema wurde bereits freigeschaltet.";
                     unlockError.style.display = "block";
                 }
             } else {
-                console.log("Code falsch!"); // Debug-Ausgabe
-                
-                // Fehlermeldung anzeigen
                 unlockError.textContent = "Dieser Code existiert nicht!";
                 unlockError.style.display = "block";
             }
         }
+
         // Funktionen für Wortverwaltung
         function toggleWordSource() {
             const wordSource = document.getElementById("wordSource").value;
@@ -972,7 +980,7 @@
                 <label for="unlockCode">Gib den Freischaltcode ein:</label>
                 <input type="text" id="unlockCode" placeholder="Code eingeben...">
                 <div id="unlockError" class="error-message" style="display: none;">Dieser Code existiert nicht!</div>
-                <div id="unlockSuccess" style="display: none; color: var(--success-color); font-weight: 600; margin-top: 8px;">
+               <div id="unlockSuccess" class="success-message" style="display: none;">
                 Nette Feger freigeschaltet!
             </div>
             </div>
