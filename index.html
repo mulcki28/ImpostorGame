@@ -465,7 +465,7 @@
                     <option value="geographie">Geographie</option>
                     <option value="deutschland">Deutschland</option>
                 </select>
-                <div class="theme-lock" id="themeLock">🔒</div>
+                <div class="theme-lock" id="themeLock">Secret Themen🔒</div>
             </div>
             
             <div class="form-group" id="wordSetupDiv" style="display: none;">
@@ -640,15 +640,18 @@
         document.getElementById("endGameBtn").addEventListener("click", endGame);
         document.getElementById("restartGameBtn").addEventListener("click", restartGame);
         document.getElementById("themeLock").addEventListener("click", openUnlockModal);
-        document.getElementById("closeModal").addEventListener("click", closeUnlockModal);
-        document.getElementById("submitUnlockBtn").addEventListener("click", checkUnlockCode);
-                
-        // Initialisierung beim Laden
+     
+        
+         // Initialisierung beim Laden
         window.addEventListener('DOMContentLoaded', function() {
             // Füge standardmäßig 3 Spielerfelder hinzu
             for (let i = 0; i < 3; i++) {
                 addPlayerField();
             }
+            
+            // Modal-Event-Listener hinzufügen, nachdem DOM geladen ist
+            document.getElementById("closeModal").addEventListener("click", closeUnlockModal);
+            document.getElementById("submitUnlockBtn").addEventListener("click", checkUnlockCode);
         });
         
         // Funktionen für Spielerverwaltung
@@ -743,13 +746,17 @@
             document.getElementById("unlockModal").classList.remove("active");
         }
 
-        // Funktion zum Überprüfen des Freischaltcodes
+       // Funktion zum Überprüfen des Freischaltcodes
         function checkUnlockCode() {
             const code = document.getElementById("unlockCode").value.trim();
             const unlockError = document.getElementById("unlockError");
             
+            console.log("Überprüfe Code:", code); // Debug-Ausgabe
+            
             // Code überprüfen
             if (code === UNLOCK_CODE) {
+                console.log("Code korrekt!"); // Debug-Ausgabe
+                
                 // Thema freischalten
                 if (!unlockedThemes.includes("netteFeger")) {
                     unlockedThemes.push("netteFeger");
@@ -771,6 +778,8 @@
                     unlockError.style.display = "block";
                 }
             } else {
+                console.log("Code falsch!"); // Debug-Ausgabe
+                
                 // Fehlermeldung anzeigen
                 unlockError.textContent = "Dieser Code existiert nicht!";
                 unlockError.style.display = "block";
@@ -950,7 +959,7 @@
     </script>
         <div class="modal-overlay" id="unlockModal">
         <div class="modal">
-            <button class="modal-close" id="closeModal">✖</button>
+            <button type="button" class="modal-close" id="closeModal">✖</button>
             <h3>Thema freischalten</h3>
             <div class="form-group">
                 <label for="unlockCode">Gib den Freischaltcode ein:</label>
