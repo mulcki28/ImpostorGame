@@ -1,0 +1,543 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mulcki Studios - Browser Spiele</title>
+    <meta name="description" content="Mulcki Studios - Entspannte Browser-Spiele für jeden Anlass. Einfache aber unterhaltsame Spiele von einem Solo-Entwickler.">
+    <meta name="keywords" content="Mulcki Studios, Browser Spiele, Online Games, Imposter Wortspiel, Partyspiele, Browser Games">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Bangers&family=Permanent+Marker&family=Poppins:wght@400;600;700&family=Comic+Neue:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #6366f1; /* Indigo */
+            --primary-dark: #4f46e5;
+            --accent-color: #f43f5e; /* Rose */
+            --accent-hover: #e11d48;
+            --background-color: #1e1e2e; /* Dark background */
+            --card-background: #282838;
+            --text-color: #f8fafc;
+            --text-secondary: #cbd5e1;
+            --success-color: #10b981; /* Green */
+            --warning-color: #f59e0b; /* Amber */
+            --error-color: #ef4444; /* Red */
+        }
+        
+        * {
+            box-sizing: border-box;
+            transition: all 0.2s ease;
+            scroll-behavior: smooth;
+        }
+        
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Poppins', Arial, sans-serif;
+            background-color: var(--background-color);
+            color: var(--text-color);
+            line-height: 1.6;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+            width: 100%;
+            box-sizing: border-box;
+        }
+        
+        /* Header styles */
+        header {
+            background-color: var(--card-background);
+            padding: 1rem 0;
+            border-bottom: 3px solid var(--primary-color);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        
+        .header-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+        
+        .logo h1 {
+            margin: 0;
+            font-family: 'Poppins', sans-serif;
+            font-size: 2.5rem;
+            letter-spacing: 2px;
+            background: linear-gradient(135deg, var(--primary-color), var(--accent-color));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+        
+        nav ul {
+            display: flex;
+            list-style: none;
+            margin: 0;
+            padding: 0;
+        }
+        
+        nav ul li {
+            margin-left: 2rem;
+        }
+        
+        nav ul li a {
+            color: var(--text-color);
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1.1rem;
+            position: relative;
+        }
+        
+        nav ul li a::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: -4px;
+            left: 0;
+            background-color: var(--accent-color);
+            transition: width 0.3s ease;
+        }
+        
+        nav ul li a:hover::after {
+            width: 100%;
+        }
+        
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(135deg, rgba(99, 102, 241, 0.8), rgba(244, 63, 94, 0.8)), 
+                        url('images/hero-background.jpg') no-repeat center center;
+            background-size: cover;
+            padding: 6rem 2rem;
+            text-align: center;
+            color: white;
+        }
+        
+        .hero h2 {
+            font-size: 3.5rem;
+            margin-bottom: 1rem;
+            font-family: 'Poppins', sans-serif;
+            font-weight: 700;
+        }
+        
+        .hero p {
+            font-size: 1.2rem;
+            max-width: 800px;
+            margin: 0 auto 2rem;
+            font-family: 'Comic Neue', cursive;
+        }
+        
+        /* Games Section */
+        .section-title {
+            font-size: 2.5rem;
+            text-align: center;
+            margin-bottom: 3rem;
+            color: var(--text-color);
+            position: relative;
+            font-family: 'Poppins', sans-serif;
+            font-weight: 700;
+        }
+        
+        .section-title::after {
+            content: '';
+            display: block;
+            width: 100px;
+            height: 4px;
+            background: linear-gradient(135deg, var(--primary-color), var(--accent-color));
+            margin: 0.5rem auto 0;
+            border-radius: 2px;
+        }
+        
+        .games-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+        
+        .game-card {
+            background-color: var(--card-background);
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        
+        .game-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+        }
+        
+        .gradient-box {
+            width: 100%;
+            height: 200px;
+            background: linear-gradient(135deg, var(--primary-color), var(--accent-color));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            color: white;
+            font-size: 3rem;
+        }
+        
+        .gradient-box p {
+            font-size: 1.2rem;
+            margin-top: 0.5rem;
+            font-family: 'Comic Neue', cursive;
+        }
+        
+        .game-content {
+            padding: 1.5rem;
+        }
+        
+        .game-content h3 {
+            margin-top: 0;
+            font-size: 1.5rem;
+            color: var(--text-color);
+            font-family: 'Poppins', sans-serif;
+            font-weight: 600;
+        }
+        
+        .game-content p {
+            color: var(--text-secondary);
+            margin-bottom: 1.5rem;
+            font-family: 'Poppins', cursive;
+            font-size: 1.1rem;
+        }
+        
+        /* Buttons */
+        .btn {
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 1rem;
+            font-weight: 600;
+            font-family: 'Poppins', sans-serif;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            transition: all 0.2s ease;
+            text-decoration: none;
+            display: inline-block;
+        }
+        
+        .btn:hover {
+            background-color: var(--primary-dark);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 8px rgba(0, 0, 0, 0.15);
+        }
+        
+        .btn:active {
+            transform: translateY(0);
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        
+        .btn-accent {
+            background-color: var(--accent-color);
+        }
+        
+        .btn-accent:hover {
+            background-color: var(--accent-hover);
+        }
+        
+        /* About Section */
+        .about {
+            background-color: var(--card-background);
+            padding: 4rem 0;
+            margin: 4rem 0;
+        }
+        
+        .about-content {
+            display: flex;
+            align-items: center;
+            gap: 3rem;
+        }
+        
+        .about-text {
+            flex: 1;
+        }
+        
+        .about-gradient {
+            flex: 1;
+            border-radius: 16px;
+            overflow: hidden;
+            height: 300px;
+            background: linear-gradient(135deg, var(--primary-color), var(--accent-color));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            color: white;
+            font-size: 3rem;
+        }
+        
+        .about-gradient p {
+            font-size: 1.2rem;
+            margin-top: 0.5rem;
+            font-family: 'Comic Neue', cursive;
+        }
+        
+        /* Contact Section */
+        .contact-info {
+            background-color: var(--card-background);
+            padding: 3rem;
+            border-radius: 16px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+            margin-bottom: 2rem;
+        }
+        
+        .contact-methods {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+        
+        .contact-method {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+        }
+        
+        .contact-icon {
+            width: 60px;
+            height: 60px;
+            background-color: var(--primary-color);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 1rem;
+            font-size: 1.5rem;
+            color: white;
+        }
+        
+        .contact-method h4 {
+            margin: 0.5rem 0;
+            color: var(--text-color);
+            font-family: 'Poppins', sans-serif;
+        }
+        
+        .contact-method p {
+            color: var(--text-secondary);
+            text-decoration: none;
+            transition: color 0.2s ease;
+        }
+        
+        /* Footer */
+        footer {
+            background-color: var(--card-background);
+            padding: 2rem 0;
+            text-align: center;
+            border-top: 3px solid var(--primary-color);
+        }
+        
+        footer p {
+            color: var(--text-secondary);
+            margin: 0;
+        }
+        
+        /* Mobile Navigation */
+        .mobile-nav-toggle {
+            display: none;
+            background: none;
+            border: none;
+            color: var(--text-color);
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+        
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .header-container {
+                flex-direction: column;
+                padding: 1rem;
+            }
+            
+            .logo h1 {
+                font-size: 2rem;
+                margin-bottom: 1rem;
+            }
+            
+            nav ul {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            nav ul li {
+                margin: 0.5rem 0;
+            }
+            
+            .hero h2 {
+                font-size: 2.5rem;
+            }
+            
+            .section-title {
+                font-size: 2rem;
+            }
+            
+            .about-content {
+                flex-direction: column;
+            }
+            
+            .container {
+                padding: 1rem;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .hero h2 {
+                font-size: 2rem;
+            }
+            
+            .btn {
+                padding: 10px 20px;
+                font-size: 0.9rem;
+            }
+            
+            .section-title {
+                font-size: 1.8rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header id="top">
+        <div class="header-container">
+            <div class="logo">
+                <h1>Mulcki Studios</h1>
+            </div>
+            <nav>
+                <ul>
+                    <li><a href="#top">Home</a></li>
+                    <li><a href="#games">Spiele</a></li>
+                    <li><a href="#about">Über mich</a></li>
+                    <li><a href="#contact">Kontakt</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+    
+    <section id="home" class="hero">
+        <div class="container">
+            <h2>Willkommen bei Mulcki Studios</h2>
+            <p>Ich entwickle kostenlose Browser-Spiele, lokal und online, um mit Freunden zu spielen!</p>
+            <a href="#games" class="btn btn-accent">Unsere Spiele entdecken</a>
+        </div>
+    </section>
+    
+    <section id="games" class="games">
+        <div class="container">
+            <h2 class="section-title">Unsere Spiele</h2>
+            <div class="games-grid">
+                <div class="game-card">
+                    <div class="gradient-box">
+                        <span>🎮</span>
+                        <p>Imposter Wortspiel</p>
+                    </div>
+                    <div class="game-content">
+                        <h3>Imposter Wortspiel (lokal)</h3>
+                        <p>Finde den Imposter! Ein lustiges Wortspiel für Freunde, direkt im Browser lokal spielbar.</p>
+                        <a href="imposter.html" class="btn">Jetzt spielen</a>
+                    </div>
+                </div>
+                
+                <div class="game-card">
+                    <div class="gradient-box">
+                        <span>🚀</span>
+                        <p>Neue Spiele kommen bald!</p>
+                    </div>
+                    <div class="game-content">
+                        <h3>Mehr Spiele sind in Entwicklung</h3>
+                        <p>Ich arbeite bereits an: Imposter Wortspiel - Online. Schau bald wieder vorbei!</p>
+                        <a href="#contact" class="btn">Kontakt</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <section id="about" class="about">
+        <div class="container">
+            <h2 class="section-title">Über Mulcki Studios</h2>
+            <div class="about-content">
+                <div class="about-text">
+                    <p>Mulcki Studios ist ein unabhängiges Ein-Mann-Entwicklerstudio, das sich auf einfache aber unterhaltsame Browser-Spiele spezialisiert hat. Meine Mission ist es, Spiele zu entwickeln, die jeder genießen kann - egal ob auf dem Handy, Tablet oder Computer.</p>
+                    <p>Ich glaube an Spiele, die Freunde und Familie zusammenbringen und für gemeinsame, unvergessliche Momente sorgen. Alle meine Spiele sind kostenlos spielbar und erfordern keine Installation.</p>
+                    <a href="#games" class="btn">Spiele entdecken</a>
+                </div>
+                <div class="about-gradient">
+                    <span>MuSu</span>
+                    <p>Mulcki Studios</p>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <section id="contact" class="contact">
+        <div class="container">
+            <h2 class="section-title">Kontakt</h2>
+            <div class="contact-info">
+                <p>Hast du Fragen, Feedback oder Vorschläge? Ich freue mich von dir zu hören!</p>
+                <div class="contact-methods">
+                    <div class="contact-method">
+                        <div class="contact-icon">📧</div>
+                        <h4>E-Mail</h4>
+                        <p>muclki.studios@gmail.com</p>
+                    </div>
+                    <div class="contact-method">
+                        <div class="contact-icon">💬</div>
+                        <h4>Discord</h4>
+                        <p>@whitemonster28</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <footer>
+        <div class="container">
+            <p>&copy; 2025 Mulcki Studios.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Smooth scrolling for anchor links
+       // Smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                
+                const targetId = this.getAttribute('href');
+                
+                if (targetId === '#top') {
+                    // Scrolle zum Anfang der Seite wenn 'Home' geklickt wird
+                    window.scrollTo({
+                        top: 0,
+                        behavior: 'smooth'
+                    });
+                } else {
+                    const targetElement = document.querySelector(targetId);
+                    
+                    if (targetElement) {
+                        window.scrollTo({
+                            top: targetElement.offsetTop,
+                            behavior: 'smooth'
+                        });
+                    }
+                }
+            });
+        });
+    </script>
+</body>
+</html>
