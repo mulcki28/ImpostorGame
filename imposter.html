@@ -881,7 +881,7 @@
             return validWords;
         }
         
-        function prepareGame() {
+    function prepareGame() {
             // Spielernamen sammeln
             const playerInputs = document.querySelectorAll(".player-name-input");
             const errorPlayerCount = document.getElementById("errorPlayerCount");
@@ -947,7 +947,7 @@
             }
             
             // Zurück-Button ausblenden und zum Kartenbildschirm wechseln
-            backToHomeBtn.classList.add("hidden");
+            backToHomeBtn.classList.add("hidden"); // Zurück-Button verstecken
             homeScreen.style.display = "none";
             cardScreen.style.display = "block";
             gameScreen.style.display = "none";
