@@ -323,21 +323,27 @@
             text-align: center;
             margin-bottom: 2rem;
         }
-        .theme-lock {
+            .theme-lock {
             display: inline-flex;
             align-items: center;
             justify-content: center;
             margin-left: 10px;
             cursor: pointer;
-            background-color: var(--card-background);
-            border-radius: 50%;
-            width: 24px;
-            height: 24px;
+            background-color: var(--primary-color);
+            border-radius: 8px;
+            width: 36px;
+            height: 36px;
+            padding: 6px;
+            font-size: 1.1rem;
+            color: white;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
             transition: all 0.2s ease;
         }
 
         .theme-lock:hover {
             background-color: var(--primary-dark);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.25);
         }
 
         .modal-overlay {
@@ -411,6 +417,31 @@
             background-color: rgba(255, 255, 255, 0.1);
             color: var(--text-color);
         }
+        .btn-back {
+            position: absolute;
+            top: 15px;
+            left: 15px; 
+            display: flex;
+            align-items: center;
+            background-color: var(--accent-color);
+            color: white;
+            padding: 8px 16px;
+            border-radius: 8px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+        }
+
+        .btn-back:hover {
+            background-color: var(--accent-hover);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.25);
+        }
+
+        .back-arrow {
+            margin-right: 6px;
+            font-size: 1.1rem;
+        }
         
         @media (max-width: 600px) {
             .container {
@@ -434,6 +465,9 @@
 </head>
 <body>
     <div class="app-header">
+        <button type="button" id="backToHomeBtn" class="btn-back">
+            <span class="back-arrow">←</span> Zurück zur Homepage
+        </button>
         <h1>Mulcki Studios</h1>
         <h2 class="game-title">Imposter Wortspiel</h2>
     </div>
@@ -653,6 +687,10 @@
         document.getElementById("endGameBtn").addEventListener("click", endGame);
         document.getElementById("restartGameBtn").addEventListener("click", restartGame);
         document.getElementById("themeLock").addEventListener("click", openUnlockModal);
+        // Event-Handler für den Zurück-Button
+        document.getElementById("backToHomeBtn").addEventListener("click", function() {
+            window.location.href = "index.html";
+        });
      
         
          // Initialisierung beim Laden
