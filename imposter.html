@@ -442,6 +442,10 @@
             margin-right: 6px;
             font-size: 1.1rem;
         }
+
+        .hidden {
+            display: none !important;
+        }
         
         @media (max-width: 600px) {
             .container {
@@ -675,6 +679,7 @@
         const playerCounter = document.getElementById("playerCounter");
         const customWordsText = document.getElementById("customWordsText");
         const wordCountInfo = document.getElementById("wordCountInfo");
+        const backToHomeBtn = document.getElementById("backToHomeBtn");
         
         // Event-Handler hinzufügen
         document.getElementById("addPlayerBtn").addEventListener("click", addPlayerField);
@@ -941,7 +946,8 @@
                 playersCopy.splice(randomIndex, 1);
             }
             
-            // Zum Kartenbildschirm wechseln
+            // Zurück-Button ausblenden und zum Kartenbildschirm wechseln
+            backToHomeBtn.classList.add("hidden");
             homeScreen.style.display = "none";
             cardScreen.style.display = "block";
             gameScreen.style.display = "none";
@@ -1003,6 +1009,9 @@
         
         function endGame() {
             // Zum Startbildschirm zurückkehren
+            homeScreen.style.display = "block";
+            gameScreen.style.display = "none";
+            backToHomeBtn.classList.remove("hidden");
             homeScreen.style.display = "block";
             gameScreen.style.display = "none";
         }
